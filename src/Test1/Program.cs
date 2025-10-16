@@ -1,4 +1,6 @@
-﻿var persons = new List<Person>
+﻿using Test1;
+
+var persons = new List<Person>
 {
     new("Tom", 18),
     new("Janis", 24),
@@ -9,10 +11,10 @@
     new("Jill", 54),
     new("Valentine", 30)
 };
-var selectedAgePerson = from person in persons where person.Age > 18 orderby person.Age select person;
-var sortAgePerson = from person in persons orderby person.Age select person;
+var selectedAgePerson = persons.Where(person => person.Age > 18).OrderBy(person => person.Age);
+var sortAgePerson = persons.OrderBy(person => person.Age);
 var middleAgePerson = persons.Average(person => person.Age);
-var selectedNameSizePerson = from person in persons where person.Name.Length >= 5 orderby person.Name select person;
+var selectedNameSizePerson = persons.Where(person => person.Name.Length >= 5).OrderBy(person => person.Name);
 
 Console.WriteLine("Возраст больше 18");
 foreach (var person in selectedAgePerson) Console.WriteLine($"{person.Name} - {person.Age}");
@@ -23,15 +25,3 @@ Console.WriteLine($"Средний возраст - {middleAgePerson}");
 Console.WriteLine();
 Console.WriteLine("Длинна имени больше 5 символов");
 foreach (var person in selectedNameSizePerson) Console.WriteLine($"{person.Name} - {person.Age}");
-
-internal class Person
-{
-    public int Age;
-    public string Name;
-
-    public Person(string name, int age)
-    {
-        Name = name;
-        Age = age;
-    }
-}
