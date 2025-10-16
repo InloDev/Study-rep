@@ -9,20 +9,20 @@
     new("Jill", 54),
     new("Valentine", 30)
 };
-var selectedAgePerson = from p in persons where p.Age > 18 orderby p.Age select p;
-var sortAgePerson = from p in persons orderby p.Age select p;
-var middleAgePerson = persons.Average(p => p.Age);
-var selectedNameSizePerson = from p in persons where p.Name.Length >= 5 orderby p.Name select p;
+var selectedAgePerson = from person in persons where person.Age > 18 orderby person.Age select person;
+var sortAgePerson = from person in persons orderby person.Age select person;
+var middleAgePerson = persons.Average(person => person.Age);
+var selectedNameSizePerson = from person in persons where person.Name.Length >= 5 orderby person.Name select person;
 
 Console.WriteLine("Возраст больше 18");
-foreach (var p in selectedAgePerson) Console.WriteLine($"{p.Name} - {p.Age}");
+foreach (var person in selectedAgePerson) Console.WriteLine($"{person.Name} - {person.Age}");
 Console.WriteLine("Отсортированно по возрасту");
-foreach (var p in sortAgePerson) Console.WriteLine($"{p.Name} - {p.Age}");
+foreach (var person in sortAgePerson) Console.WriteLine($"{person.Name} - {person.Age}");
 Console.WriteLine();
 Console.WriteLine($"Средний возраст - {middleAgePerson}");
 Console.WriteLine();
 Console.WriteLine("Длинна имени больше 5 символов");
-foreach (var p in selectedNameSizePerson) Console.WriteLine($"{p.Name} - {p.Age}");
+foreach (var person in selectedNameSizePerson) Console.WriteLine($"{person.Name} - {person.Age}");
 
 internal class Person
 {
