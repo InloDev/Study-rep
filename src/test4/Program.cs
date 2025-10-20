@@ -1,20 +1,20 @@
-﻿var flag = 'Y';
-while (flag is 'Y' or 'y')
+﻿var repeatOperation = 'Y';
+while (repeatOperation is 'Y' or 'y')
 {
     Console.Write("Введите 1-е число: ");
-    var a = Convert.ToInt32(Console.ReadLine());
+    var firstNumber = Convert.ToInt32(Console.ReadLine());
     Console.Write("Введите 2-е число: ");
-    var b = Convert.ToInt32(Console.ReadLine());
+    var secondNumber = Convert.ToInt32(Console.ReadLine());
     Console.Write("Выберите операцию (+, -, *, /): ");
-    var c = Convert.ToChar(Console.ReadLine() ?? string.Empty);
-    switch (c)
+    var selectionOperation = Convert.ToChar(Console.ReadLine() ?? string.Empty);
+    switch (selectionOperation)
     {
-        case '+': Console.WriteLine($"{a} + {b} = {a + b}"); break;
-        case '-': Console.WriteLine($"{a} - {b} = {a - b}"); break;
-        case '*': Console.WriteLine($"{a} * {b} = {a * b}"); break;
-        case '/': Console.WriteLine($"{a} / {b} = {a / b}"); break;
+        case '+': Console.WriteLine($"{firstNumber} + {secondNumber} = {firstNumber + secondNumber}"); break;
+        case '-': Console.WriteLine($"{firstNumber} - {secondNumber} = {firstNumber - secondNumber}"); break;
+        case '*': Console.WriteLine($"{firstNumber} * {secondNumber} = {firstNumber * secondNumber}"); break;
+        case '/': Console.WriteLine($"{firstNumber} / {secondNumber} = {firstNumber / secondNumber}"); break;
     }
 
     Console.WriteLine("Желаете продолжить? (Y/N)");
-    flag = Convert.ToChar(Console.ReadLine() ?? string.Empty);
+    repeatOperation = Convert.ToChar(Console.ReadLine() ?? string.Empty);
 }
