@@ -1,8 +1,8 @@
 ﻿namespace Test8ClassLibrary;
 
-public class StringToIntConverter : IConverter<string, int>
+public sealed class StringToIntConverter : IConverter<string?, int>
 {
-    public int Convert(string input)
+    public int Convert(string? input)
     {
         if (int.TryParse(input, out var result))
             return result;
