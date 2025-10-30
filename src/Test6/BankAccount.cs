@@ -1,4 +1,6 @@
-﻿internal class BankAccount
+﻿namespace Test6;
+
+internal class BankAccount
 {
     private readonly int _id;
     private int _balance;

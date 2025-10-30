@@ -1,3 +1,7 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using Infrastructure;
 
-Console.WriteLine("Hello, World!");
+Console.WriteLine("Напишите название города: ");
+string? cityName = Convert.ToString(Console.ReadLine());
+Console.WriteLine(cityName);
+HttpRequest request = new HttpRequest(new HttpClient());
+if (cityName != null) await request.GetResponseAsync(cityName);

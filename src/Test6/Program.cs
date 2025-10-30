@@ -9,6 +9,8 @@
   Баланс не может быть отрицательным.
 */
 
+using Test6;
+
 var account1 = new BankAccount(10001, 250);
 account1.Deposit(1000);
 account1.Withdraw(1100);
