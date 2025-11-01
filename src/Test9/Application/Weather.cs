@@ -1,14 +1,30 @@
 ﻿namespace Application;
 
-public class WeatherInfo(WeatherJsonResponce? data)
+public sealed class WeatherInfo
 {
-    private string? CityName { get; } = data?.name;
-    private string? Weather { get; } = data?.weather[0].description;
-    private double? Temp { get; } = data?.main.temp;
-    private double? WindSpeed { get; } = data?.wind.speed;
+    private readonly string? _cityName;
+    private readonly double? _temp;
+    private readonly string? _weather;
+    private readonly double? _windSpeed;
 
-    public void PrintWeatherInfo()
+    public WeatherInfo(WeatherJsonResponce? data)
     {
-        Console.Write($"Город: {CityName}\nПогода: {Weather}\nТемпература: {Temp} °C\nСкорость ветра: {WindSpeed} м/с");
+        _cityName = data?.name;
+        _weather = data?.weather[0].description;
+        _temp = data?.main.temp;
+        _windSpeed = data?.wind.speed;
+    }
+
+    public WeatherInfo(string cityName, string weather, double temp, double windSpeed)
+    {
+        _cityName = cityName;
+        _weather = weather;
+        _temp = temp;
+        _windSpeed = windSpeed;
+    }
+
+    public string PrintWeatherInfo()
+    {
+        return $"Город: {_cityName}\nПогода: {_weather}\nТемпература: {_temp} °C\nСкорость ветра: {_windSpeed} м/с";
     }
 }
