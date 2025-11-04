@@ -3,7 +3,7 @@ using Infrastructure;
 
 namespace Tests;
 
-public sealed class StubHttpRequest : IWeatherApi
+public sealed class StubWeatherApi : IWeatherApi
 {
     public Task<WeatherInfo> GetAsync(string cityName)
     {

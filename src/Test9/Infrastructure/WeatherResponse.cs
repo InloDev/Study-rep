@@ -1,3 +1,3 @@
 ﻿namespace Infrastructure;
 
-public sealed record WeatherResponse( string Description);
+public sealed record WeatherResponse(string Description);

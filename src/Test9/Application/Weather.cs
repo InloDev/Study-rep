@@ -12,7 +12,7 @@ public sealed class WeatherInfo
         ArgumentException.ThrowIfNullOrWhiteSpace(cityName);
         ArgumentException.ThrowIfNullOrWhiteSpace(weather);
         ArgumentOutOfRangeException.ThrowIfNegative(windSpeed);
-        
+
         _cityName = cityName;
         _weather = weather;
         _temp = temp;

@@ -7,7 +7,7 @@ public sealed class WeatherApiTests
     [Fact]
     public async Task CheckWeatherOutput()
     {
-        IWeatherApi client = new StubHttpRequest();
+        IWeatherApi client = new StubWeatherApi();
         var cityName = "Bender";
         var result = await client.GetAsync(cityName);
         var actualResult = result.GetDisplayInfo();
@@ -20,7 +20,7 @@ public sealed class WeatherApiTests
     [InlineData("")]
     public async Task CheckCityNameInput(string input)
     {
-        IWeatherApi client = new StubHttpRequest();
+        IWeatherApi client = new StubWeatherApi();
         await Assert.ThrowsAsync<ArgumentException>(async () => await client.GetAsync(input));
     }
 }

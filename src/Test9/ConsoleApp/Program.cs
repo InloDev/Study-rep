@@ -5,10 +5,7 @@ try
     Console.Write("Напишите название города: ");
     var cityName = Convert.ToString(Console.ReadLine());
 
-    if (string.IsNullOrWhiteSpace(cityName))
-    {
-        throw new ArgumentException("Недопустимое название города!");
-    }
+    if (string.IsNullOrWhiteSpace(cityName)) throw new ArgumentException("Недопустимое название города!");
 
     IWeatherApi weatherApi = new WeatherApi(new HttpClient());
     var weather = await weatherApi.GetAsync(cityName);
