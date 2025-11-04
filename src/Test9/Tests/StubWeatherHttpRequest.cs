@@ -5,10 +5,8 @@ namespace Tests;
 
 public sealed class StubHttpRequest : IWeatherApi
 {
-    public Task<WeatherInfo> GetResponseAsync(string cityName)
+    public Task<WeatherInfo> GetAsync(string cityName)
     {
-        if (string.IsNullOrWhiteSpace(cityName))
-            throw new Exception();
         var stubData = new WeatherInfo(cityName, "Солнечно", 15, 30);
         return Task.FromResult(stubData);
     }

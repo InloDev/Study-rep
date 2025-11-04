@@ -3,30 +3,23 @@ using Application;
 
 namespace Infrastructure;
 
-public interface IWeatherApi
-{
-    Task<WeatherInfo> GetResponseAsync(string cityName);
-}
-
-public sealed class HttpRequest(HttpClient client) : IWeatherApi
+public sealed class WeatherApi(HttpClient client) : IWeatherApi
 {
     private const string ApiKey = "65eed83ce86219a7eba772b95cccf376";
-    private static readonly string BaseUrl = "https://api.openweathermap.org/data/2.5/weather";
+    private const string BaseUrl = "https://api.openweathermap.org/data/2.5/weather";
 
-    public async Task<WeatherInfo> GetResponseAsync(string cityName)
+    public async Task<WeatherInfo> GetAsync(string cityName)
     {
-        if (string.IsNullOrWhiteSpace(cityName))
-            throw new ArgumentException();
         var url = $"{BaseUrl}?q={cityName}&appid={ApiKey}&units=metric&lang=ru";
         var responseMessage = await client.GetAsync(url);
         var responseJson = await responseMessage.Content.ReadAsStringAsync();
         var optionJson = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-        var weatherJsonResponse = JsonSerializer.Deserialize<WeatherJsonResponce>(responseJson, optionJson);
+        var weatherJsonResponse = JsonSerializer.Deserialize<WeatherJsonResponse>(responseJson, optionJson);
         var weatherInfo = new WeatherInfo(
-            weatherJsonResponse?.name ??
+            weatherJsonResponse?.Name ??
             throw new InvalidOperationException("Не удалось получить информацию о погоде для указанного города."),
-            weatherJsonResponse.weather[0].description,
-            weatherJsonResponse.main.temp, weatherJsonResponse.wind.speed);
+            weatherJsonResponse.Weather[0].Description,
+            weatherJsonResponse.Main.Temp, weatherJsonResponse.Wind.Speed);
         return weatherInfo;
     }
 }

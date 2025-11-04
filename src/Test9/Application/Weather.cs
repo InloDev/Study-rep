@@ -9,6 +9,10 @@ public sealed class WeatherInfo
 
     public WeatherInfo(string cityName, string weather, double temp, double windSpeed)
     {
+        ArgumentException.ThrowIfNullOrWhiteSpace(cityName);
+        ArgumentException.ThrowIfNullOrWhiteSpace(weather);
+        ArgumentOutOfRangeException.ThrowIfNegative(windSpeed);
+        
         _cityName = cityName;
         _weather = weather;
         _temp = temp;
