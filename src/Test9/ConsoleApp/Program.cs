@@ -4,9 +4,9 @@ Console.Write("Напишите название города: ");
 var cityName = Convert.ToString(Console.ReadLine());
 
 IWeatherApi weatherApi = new HttpRequest(new HttpClient());
-if (cityName != null)
+if (cityName is not null)
 {
     var weather = await weatherApi.GetResponseAsync(cityName);
-    var weatherInfo = weather.PrintWeatherInfo();
+    var weatherInfo = weather.GetDisplayInfo();
     Console.WriteLine(weatherInfo);
 }
