@@ -22,7 +22,11 @@ public sealed class HttpRequest(HttpClient client) : IWeatherApi
         var responseJson = await responseMessage.Content.ReadAsStringAsync();
         var optionJson = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
         var weatherJsonResponse = JsonSerializer.Deserialize<WeatherJsonResponce>(responseJson, optionJson);
-        var weatherInfo = new WeatherInfo(weatherJsonResponse ?? throw new InvalidOperationException("Не удалось получить информацию о погоде для указанного города."));
+        var weatherInfo = new WeatherInfo(
+            weatherJsonResponse?.name ??
+            throw new InvalidOperationException("Не удалось получить информацию о погоде для указанного города."),
+            weatherJsonResponse.weather[0].description,
+            weatherJsonResponse.main.temp, weatherJsonResponse.wind.speed);
         return weatherInfo;
     }
 }
