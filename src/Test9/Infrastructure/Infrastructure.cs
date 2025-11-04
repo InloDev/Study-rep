@@ -16,13 +16,13 @@ public sealed class HttpRequest(HttpClient client) : IWeatherApi
     public async Task<WeatherInfo> GetResponseAsync(string cityName)
     {
         if (string.IsNullOrWhiteSpace(cityName))
-            throw new Exception();
+            throw new ArgumentException();
         var url = $"{BaseUrl}?q={cityName}&appid={ApiKey}&units=metric&lang=ru";
         var responseMessage = await client.GetAsync(url);
         var responseJson = await responseMessage.Content.ReadAsStringAsync();
         var optionJson = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
         var weatherJsonResponse = JsonSerializer.Deserialize<WeatherJsonResponce>(responseJson, optionJson);
-        var weatherInfo = new WeatherInfo(weatherJsonResponse);
+        var weatherInfo = new WeatherInfo(weatherJsonResponse ?? throw new InvalidOperationException("Не удалось получить информацию о погоде для указанного города."));
         return weatherInfo;
     }
 }
