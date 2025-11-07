@@ -2,7 +2,7 @@
 
 namespace Infrastructure;
 
-public class BannedCitiesCheck(IWeatherApi weatherApi)
+public class WeatherRequestValidator(IWeatherApi weatherApi)
 {
     private readonly HashSet<string> _bannedCities = new(StringComparer.OrdinalIgnoreCase)
     {

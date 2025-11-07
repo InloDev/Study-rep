@@ -8,7 +8,7 @@ try
     if (string.IsNullOrWhiteSpace(cityName)) throw new ArgumentException("Недопустимое название города!");
 
     IWeatherApi weatherApi = new WeatherApi(new HttpClient());
-    BannedCitiesCheck check = new BannedCitiesCheck(weatherApi); 
+    WeatherRequestValidator check = new WeatherRequestValidator(weatherApi);
     await check.GetWeatherAsync(cityName);
    
 }
