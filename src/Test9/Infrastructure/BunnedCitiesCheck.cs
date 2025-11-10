@@ -1,21 +1,19 @@
-﻿using Application;
+﻿namespace Infrastructure;
 
-namespace Infrastructure;
-
-public class WeatherRequestValidator(IWeatherApi weatherApi)
+public sealed class BannedCitiesValidator(IWeatherApi weatherApi)
 {
     private readonly HashSet<string> _bannedCities = new(StringComparer.OrdinalIgnoreCase)
     {
         "Кишинев", "N", "Киев"
     };
 
-    public async Task GetWeatherAsync(string cityName)
+    public async Task<string> GetWeatherAsync(string cityName)
     {
         if (_bannedCities.Contains(cityName))
             throw new InvalidOperationException($"Запрос погоды для города '{cityName}' запрещен.");
 
-        WeatherInfo weather = await weatherApi.GetAsync(cityName);
-        var weatherInfo = weather.GetDisplayInfo();
-        Console.WriteLine(weatherInfo);
+        var weather = await weatherApi.GetAsync(cityName);
+        return  weather.GetDisplayInfo();
+
     }
 }

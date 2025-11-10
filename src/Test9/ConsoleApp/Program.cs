@@ -5,14 +5,18 @@ try
     Console.Write("Напишите название города: ");
     var cityName = Convert.ToString(Console.ReadLine());
 
-    if (string.IsNullOrWhiteSpace(cityName)) throw new ArgumentException("Недопустимое название города!");
-
-    IWeatherApi weatherApi = new WeatherApi(new HttpClient());
-    WeatherRequestValidator check = new WeatherRequestValidator(weatherApi);
-    await check.GetWeatherAsync(cityName);
-   
+    if (string.IsNullOrWhiteSpace(cityName))
+    {
+        Console.WriteLine("Недопустимое название города!");
+    }
+    else
+    {
+        IWeatherApi weatherApi = new WeatherApi(new HttpClient());
+        var check = new BannedCitiesValidator(weatherApi);
+        Console.WriteLine(await check.GetWeatherAsync(cityName));
+    }
 }
-catch (ArgumentException e)
+catch (InvalidOperationException e)
 {
     Console.WriteLine($"Ошибка: {e.Message}");
 }

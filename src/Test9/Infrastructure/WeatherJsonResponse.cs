@@ -1,5 +1,3 @@
-﻿using System.Text.Json.Serialization;
+﻿namespace Infrastructure;
 
-namespace Infrastructure;
-
-public sealed record WeatherJsonResponse(TempInfoDto Main, Wind Wind, string? Name, WeatherResponse[] Weather);
+public sealed record WeatherJsonResponse(TempInfoDto Main, WindInfoDto Wind, string? Name, WeatherResponseInfoDto[] Weather);
