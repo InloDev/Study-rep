@@ -12,8 +12,6 @@ public sealed class BannedCitiesValidator(IWeatherApi weatherApi)
         if (_bannedCities.Contains(cityName))
             throw new InvalidOperationException($"Запрос погоды для города '{cityName}' запрещен.");
 
-        var weather = await weatherApi.GetAsync(cityName);
-        return  weather.GetDisplayInfo();
-
+        return (await weatherApi.GetAsync(cityName)).GetDisplayInfo();
     }
 }

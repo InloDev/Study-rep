@@ -14,7 +14,7 @@ public sealed class WeatherApi(HttpClient client) : IWeatherApi
         var responseMessage = await client.GetAsync(url);
         var responseJson = await responseMessage.Content.ReadAsStringAsync();
         var optionJson = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-        var weatherJsonResponse = JsonSerializer.Deserialize<WeatherJsonResponse>(responseJson, optionJson);
+        var weatherJsonResponse = JsonSerializer.Deserialize<WeatherTransfer>(responseJson, optionJson);
         var weatherInfo = new WeatherInfo(
             weatherJsonResponse?.Name ??
             throw new InvalidOperationException("Не удалось получить информацию о погоде для указанного города."),
