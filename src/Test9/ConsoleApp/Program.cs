@@ -1,4 +1,15 @@
 ﻿using Infrastructure;
+using Microsoft.Extensions.DependencyInjection;
+
+IServiceCollection services = new ServiceCollection();
+
+
+services.AddTransient<HttpClient>();
+services.AddTransient<IWeatherApi, WeatherApi>();
+services.AddTransient<ICityRestrictionService, CityRestrictionService>();
+
+var serviceProvider = services.BuildServiceProvider();
+var cityRestrictionService = serviceProvider.GetRequiredService<ICityRestrictionService>();
 
 try
 {
@@ -6,15 +17,8 @@ try
     var cityName = Convert.ToString(Console.ReadLine());
 
     if (string.IsNullOrWhiteSpace(cityName))
-    {
         Console.WriteLine("Недопустимое название города!");
-    }
-    else
-    {
-        IWeatherApi weatherApi = new WeatherApi(new HttpClient());
-        var check = new BannedCitiesValidator(weatherApi);
-        Console.WriteLine(await check.GetWeatherAsync(cityName));
-    }
+    else Console.WriteLine(await cityRestrictionService.GetWeatherAsync(cityName));
 }
 catch (InvalidOperationException e)
 {
