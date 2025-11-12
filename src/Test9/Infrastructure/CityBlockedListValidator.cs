@@ -1,6 +1,6 @@
 ﻿namespace Infrastructure;
 
-public sealed class CityRestrictionService(IWeatherApi weatherApi) : ICityRestrictionService
+public sealed class CityBlockedListValidator(IWeatherApi weatherApi) : ICityBlockedListValidator
 {
     private readonly HashSet<string> _bannedCities = new(StringComparer.OrdinalIgnoreCase)
     {
@@ -11,7 +11,7 @@ public sealed class CityRestrictionService(IWeatherApi weatherApi) : ICityRestri
     {
         if (_bannedCities.Contains(cityName))
             throw new InvalidOperationException($"Запрос погоды для города '{cityName}' запрещен.");
-
-        return (await weatherApi.GetAsync(cityName)).GetDisplayInfo();
+        var weather = await weatherApi.GetAsync(cityName);
+        return weather.GetDisplayInfo();
     }
 }

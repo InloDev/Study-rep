@@ -1,6 +1,6 @@
 ﻿namespace Infrastructure;
 
-public interface ICityRestrictionService
+public interface ICityBlockedListValidator
 {
     Task<string> GetWeatherAsync(string cityName);
 }

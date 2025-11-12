@@ -3,13 +3,12 @@ using Microsoft.Extensions.DependencyInjection;
 
 IServiceCollection services = new ServiceCollection();
 
-
-services.AddTransient<HttpClient>();
+services.AddHttpClient();
 services.AddTransient<IWeatherApi, WeatherApi>();
-services.AddTransient<ICityRestrictionService, CityRestrictionService>();
+services.AddTransient<ICityBlockedListValidator, CityBlockedListValidator>();
 
 var serviceProvider = services.BuildServiceProvider();
-var cityRestrictionService = serviceProvider.GetRequiredService<ICityRestrictionService>();
+var cityRestrictionService = serviceProvider.GetRequiredService<ICityBlockedListValidator>();
 
 try
 {
