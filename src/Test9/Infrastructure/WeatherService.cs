@@ -1,6 +1,6 @@
 ﻿namespace Infrastructure;
 
-public sealed class CityBlockedListValidator(IWeatherApi weatherApi) : ICityBlockedListValidator
+public sealed class WeatherService(IWeatherApi weatherApi) : IWeatherService
 {
     private readonly HashSet<string> _bannedCities = new(StringComparer.OrdinalIgnoreCase)
     {

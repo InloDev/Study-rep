@@ -5,10 +5,10 @@ IServiceCollection services = new ServiceCollection();
 
 services.AddHttpClient();
 services.AddTransient<IWeatherApi, WeatherApi>();
-services.AddTransient<ICityBlockedListValidator, CityBlockedListValidator>();
+services.AddTransient<IWeatherService, WeatherService>();
 
 var serviceProvider = services.BuildServiceProvider();
-var cityRestrictionService = serviceProvider.GetRequiredService<ICityBlockedListValidator>();
+var cityRestrictionService = serviceProvider.GetRequiredService<IWeatherService>();
 
 try
 {

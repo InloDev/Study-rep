@@ -26,15 +26,15 @@ public sealed class WeatherApiTests
     }
 }
 
-public sealed class CityBlockedListValidatorTests
+public sealed class WeatherServiceTests
 {
     private readonly ServiceProvider _provider;
 
-    public CityBlockedListValidatorTests()
+    public WeatherServiceTests()
     {
         var services = new ServiceCollection();
         services.AddTransient<IWeatherApi, StubWeatherApi>();
-        services.AddTransient<ICityBlockedListValidator, CityBlockedListValidator>();
+        services.AddTransient<IWeatherService, WeatherService>();
         _provider = services.BuildServiceProvider();
     }
 
@@ -44,7 +44,7 @@ public sealed class CityBlockedListValidatorTests
     [InlineData("Киев")]
     public async Task CheckCityBlockedListValidator(string input)
     {
-        var validator = _provider.GetRequiredService<ICityBlockedListValidator>();
+        var validator = _provider.GetRequiredService<IWeatherService>();
         await Assert.ThrowsAsync<InvalidOperationException>(async () => await validator.GetWeatherAsync(input));
     }
 }
