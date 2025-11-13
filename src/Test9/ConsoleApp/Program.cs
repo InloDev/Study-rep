@@ -1,18 +1,25 @@
 ﻿using Infrastructure;
+using Microsoft.Extensions.DependencyInjection;
+
+IServiceCollection services = new ServiceCollection();
+
+services.AddHttpClient();
+services.AddTransient<IWeatherApi, WeatherApi>();
+services.AddTransient<IWeatherService, WeatherService>();
+
+var serviceProvider = services.BuildServiceProvider();
+var cityRestrictionService = serviceProvider.GetRequiredService<IWeatherService>();
 
 try
 {
     Console.Write("Напишите название города: ");
     var cityName = Convert.ToString(Console.ReadLine());
 
-    if (string.IsNullOrWhiteSpace(cityName)) throw new ArgumentException("Недопустимое название города!");
-
-    IWeatherApi weatherApi = new WeatherApi(new HttpClient());
-    var weather = await weatherApi.GetAsync(cityName);
-    var weatherInfo = weather.GetDisplayInfo();
-    Console.WriteLine(weatherInfo);
+    if (string.IsNullOrWhiteSpace(cityName))
+        Console.WriteLine("Недопустимое название города!");
+    else Console.WriteLine(await cityRestrictionService.GetWeatherAsync(cityName));
 }
-catch (ArgumentException e)
+catch (InvalidOperationException e)
 {
     Console.WriteLine($"Ошибка: {e.Message}");
 }
