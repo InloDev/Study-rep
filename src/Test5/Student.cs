@@ -1,4 +1,6 @@
-﻿internal class Student(string name)
+﻿namespace Test5;
+
+internal class Student(string name)
 {
     private readonly List<int?> _grades = new();
 

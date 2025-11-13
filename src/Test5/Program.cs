@@ -7,6 +7,8 @@
 * PrintInfo() — вывести информацию
 */
 
+using Test5;
+
 var tom = new Student("Tom");
 List<int?> grades = [5, 4, 3, 2, 3, 4, 3, 2, 4, 2];
 tom.AddGrade(5);
