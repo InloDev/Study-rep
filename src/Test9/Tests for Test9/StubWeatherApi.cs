@@ -5,7 +5,7 @@ namespace Tests;
 
 public sealed class StubWeatherApi : IWeatherApi
 {
-    public Task<WeatherInfo> GetAsync(string cityName)
+    public Task<WeatherInfo> GetWeatherApiAsync(string cityName)
     {
         var stubData = new WeatherInfo(cityName, "Солнечно", 15, 30);
         return Task.FromResult(stubData);

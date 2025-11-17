@@ -4,5 +4,5 @@ namespace Infrastructure;
 
 public interface IWeatherApi
 {
-    Task<WeatherInfo> GetAsync(string cityName);
+    Task<WeatherInfo> GetWeatherApiAsync(string cityName);
 }
