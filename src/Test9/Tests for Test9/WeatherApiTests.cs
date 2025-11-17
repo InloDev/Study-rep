@@ -8,21 +8,13 @@ public sealed class WeatherApiTests
     [Fact]
     public async Task CheckWeatherOutput()
     {
-        IWeatherApi client = new StubWeatherApi();
+        IOpenWeatherApi stubApi = new StubOpenWeatherApi();
+        IWeatherService service = new WeatherService(stubApi);
+
         var cityName = "Bender";
-        var result = await client.GetWeatherApiAsync(cityName);
-        var actualResult = result.GetDisplayInfo();
+        var actualResult = await service.GetWeatherServiceAsync(cityName);
         var expectedResult = "Город: Bender\nПогода: Солнечно\nТемпература: 15 °C\nСкорость ветра: 30 м/с";
         Assert.Equal(actualResult, expectedResult);
-    }
-
-    [Theory]
-    [InlineData("  ")]
-    [InlineData("")]
-    public async Task CheckCityNameInput(string input)
-    {
-        IWeatherApi client = new StubWeatherApi();
-        await Assert.ThrowsAsync<ArgumentException>(async () => await client.GetWeatherApiAsync(input));
     }
 }
 
@@ -33,8 +25,8 @@ public sealed class WeatherServiceTests
     public WeatherServiceTests()
     {
         var services = new ServiceCollection();
-        services.AddTransient<IWeatherApi, StubWeatherApi>();
-        services.AddTransient<IWeatherService, WeatherService>();
+        services.AddTransient<IOpenWeatherApi, StubOpenWeatherApi>();
+        services.AddTransient<IWeatherService,WeatherService>();
         _provider = services.BuildServiceProvider();
     }
 
@@ -46,5 +38,14 @@ public sealed class WeatherServiceTests
     {
         var validator = _provider.GetRequiredService<IWeatherService>();
         await Assert.ThrowsAsync<InvalidOperationException>(async () => await validator.GetWeatherServiceAsync(input));
+    }
+    
+    [Theory]
+    [InlineData("  ")]
+    [InlineData("")]
+    public async Task CheckCityNameInput(string input)
+    {
+        var validator = _provider.GetRequiredService<IWeatherService>();
+        await Assert.ThrowsAsync<ArgumentException>(async () => await validator.GetWeatherServiceAsync(input));
     }
 }
