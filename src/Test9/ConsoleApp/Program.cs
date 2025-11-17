@@ -8,7 +8,6 @@ services.AddRefitClient<IOpenWeatherApi>().ConfigureHttpClient(client =>
 {
     client.BaseAddress = new Uri("https://api.openweathermap.org/data/2.5/");
 });
-services.AddTransient<IWeatherApi, WeatherApi>();
 services.AddTransient<IWeatherService, WeatherService>();
 
 var serviceProvider = services.BuildServiceProvider();
