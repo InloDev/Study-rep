@@ -11,10 +11,11 @@ public sealed class WeatherApi(IOpenWeatherApi api) : IWeatherApi
         var weatherResponse = await api.GetWeatherAsync(cityName, ApiKey);
         if (weatherResponse is null)
             throw new InvalidOperationException("Не удалось получить данные о погоде");
+        if (weatherResponse.Weather.Length == 0)
+            throw new InvalidOperationException("Не удалось получить описание погоды");
 
         var weatherInfo = new WeatherInfo(
-            weatherResponse.Name ??
-            throw new InvalidOperationException("Не удалось получить информацию о погоде для указанного города."),
+            weatherResponse.Name!,
             weatherResponse.Weather[0].Description,
             weatherResponse.Main.Temp, weatherResponse.Wind.Speed);
         return weatherInfo;
