@@ -5,6 +5,16 @@ namespace Tests;
 
 public sealed class WeatherApiTests
 {
+    private readonly ServiceProvider _provider;
+
+    public WeatherApiTests()
+    {
+        var services = new ServiceCollection();
+        services.AddTransient<IWeatherApi, StubWeatherApi>();
+        services.AddTransient<IWeatherService, WeatherService>();
+        _provider = services.BuildServiceProvider();
+    }
+    
     [Fact]
     public async Task CheckWeatherOutput()
     {
@@ -24,20 +34,7 @@ public sealed class WeatherApiTests
         IWeatherApi client = new StubWeatherApi();
         await Assert.ThrowsAsync<ArgumentException>(async () => await client.GetAsync(input));
     }
-}
-
-public sealed class WeatherServiceTests
-{
-    private readonly ServiceProvider _provider;
-
-    public WeatherServiceTests()
-    {
-        var services = new ServiceCollection();
-        services.AddTransient<IWeatherApi, StubWeatherApi>();
-        services.AddTransient<IWeatherService, WeatherService>();
-        _provider = services.BuildServiceProvider();
-    }
-
+    
     [Theory]
     [InlineData("Кишинев")]
     [InlineData("N")]
