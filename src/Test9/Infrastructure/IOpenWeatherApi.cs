@@ -5,7 +5,7 @@ namespace Infrastructure;
 public interface IOpenWeatherApi
 {
     [Get("/weather")]
-    Task<WeatherTransfer> GetWeatherAsync(
+    Task<WeatherTransfer> GetOpenWeatherApiAsync(
         [AliasAs("q")] string cityName,
         [AliasAs("appid")] string apiKey,
         [AliasAs("units")] string units = "metric",

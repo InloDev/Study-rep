@@ -10,7 +10,7 @@ public sealed class WeatherApiTests
     {
         IWeatherApi client = new StubWeatherApi();
         var cityName = "Bender";
-        var result = await client.GetAsync(cityName);
+        var result = await client.GetWeatherApiAsync(cityName);
         var actualResult = result.GetDisplayInfo();
         var expectedResult = "Город: Bender\nПогода: Солнечно\nТемпература: 15 °C\nСкорость ветра: 30 м/с";
         Assert.Equal(actualResult, expectedResult);
@@ -22,7 +22,7 @@ public sealed class WeatherApiTests
     public async Task CheckCityNameInput(string input)
     {
         IWeatherApi client = new StubWeatherApi();
-        await Assert.ThrowsAsync<ArgumentException>(async () => await client.GetAsync(input));
+        await Assert.ThrowsAsync<ArgumentException>(async () => await client.GetWeatherApiAsync(input));
     }
 }
 
@@ -45,6 +45,6 @@ public sealed class WeatherServiceTests
     public async Task CheckCityBlockedListValidator(string input)
     {
         var validator = _provider.GetRequiredService<IWeatherService>();
-        await Assert.ThrowsAsync<InvalidOperationException>(async () => await validator.GetWeatherAsync(input));
+        await Assert.ThrowsAsync<InvalidOperationException>(async () => await validator.GetWeatherServiceAsync(input));
     }
 }
