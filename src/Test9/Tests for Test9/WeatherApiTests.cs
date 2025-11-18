@@ -5,6 +5,16 @@ namespace Tests;
 
 public sealed class WeatherApiTests
 {
+    private readonly ServiceProvider _provider;
+
+    public WeatherApiTests()
+    {
+        var services = new ServiceCollection();
+        services.AddTransient<IWeatherApi, StubWeatherApi>();
+        services.AddTransient<IWeatherService, WeatherService>();
+        _provider = services.BuildServiceProvider();
+    }
+    
     [Fact]
     public async Task CheckWeatherOutput()
     {
@@ -16,20 +26,16 @@ public sealed class WeatherApiTests
         var expectedResult = "Город: Bender\nПогода: Солнечно\nТемпература: 15 °C\nСкорость ветра: 30 м/с";
         Assert.Equal(actualResult, expectedResult);
     }
-}
 
-public sealed class WeatherServiceTests
-{
-    private readonly ServiceProvider _provider;
-
-    public WeatherServiceTests()
+    [Theory]
+    [InlineData("  ")]
+    [InlineData("")]
+    public async Task CheckCityNameInput(string input)
     {
-        var services = new ServiceCollection();
-        services.AddTransient<IOpenWeatherApi, StubOpenWeatherApi>();
-        services.AddTransient<IWeatherService,WeatherService>();
-        _provider = services.BuildServiceProvider();
+        IWeatherApi client = new StubWeatherApi();
+        await Assert.ThrowsAsync<ArgumentException>(async () => await client.GetAsync(input));
     }
-
+    
     [Theory]
     [InlineData("Кишинев")]
     [InlineData("N")]
