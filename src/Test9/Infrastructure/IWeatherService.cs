@@ -1,6 +1,8 @@
-﻿namespace Infrastructure;
+﻿using Application;
+
+namespace Infrastructure;
 
 public interface IWeatherService
 {
-    Task<string> GetWeatherServiceAsync(string cityName);
+    Task<WeatherInfo> GetWeatherServiceAsync(string cityName);
 }
