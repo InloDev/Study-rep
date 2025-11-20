@@ -21,8 +21,8 @@ public sealed class WeatherServiceTests
     [InlineData("Киев")]
     public async Task CityBlockedList(string input)
     {
-        var validator = _provider.GetRequiredService<IWeatherService>();
-        await Assert.ThrowsAsync<InvalidOperationException>(async () => await validator.GetWeatherServiceAsync(input));
+        var weatherService = _provider.GetRequiredService<IWeatherService>();
+        await Assert.ThrowsAsync<InvalidOperationException>(async () => await weatherService.GetWeatherInfoAsync(input));
     }
     
     [Theory]
@@ -30,7 +30,7 @@ public sealed class WeatherServiceTests
     [InlineData("")]
     public async Task CityNameInput(string input)
     {
-        var validator = _provider.GetRequiredService<IWeatherService>();
-        await Assert.ThrowsAsync<ArgumentException>(async () => await validator.GetWeatherServiceAsync(input));
+        var weatherService = _provider.GetRequiredService<IWeatherService>();
+        await Assert.ThrowsAsync<ArgumentException>(async () => await weatherService.GetWeatherInfoAsync(input));
     }
 }

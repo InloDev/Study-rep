@@ -11,7 +11,7 @@ public sealed class WeatherApiTests
         IWeatherService service = new WeatherService(stubApi);
 
         var cityName = "Bender";
-        var actualResult = (await service.GetWeatherServiceAsync(cityName)).GetDisplayInfo();
+        var actualResult = (await service.GetWeatherInfoAsync(cityName)).GetDisplayInfo();
         var expectedResult = "Город: Bender\nПогода: Солнечно\nТемпература: 15 °C\nСкорость ветра: 30 м/с";
         Assert.Equal(actualResult, expectedResult);
     }

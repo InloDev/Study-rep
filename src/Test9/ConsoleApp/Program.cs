@@ -20,7 +20,7 @@ try
 
     if (string.IsNullOrWhiteSpace(cityName))
         Console.WriteLine("Недопустимое название города!");
-    else Console.WriteLine((await cityRestrictionService.GetWeatherServiceAsync(cityName)).GetDisplayInfo());
+    else Console.WriteLine((await cityRestrictionService.GetWeatherInfoAsync(cityName)).GetDisplayInfo());
 }
 catch (InvalidOperationException e)
 {

@@ -11,7 +11,7 @@ public sealed class WeatherService(IOpenWeatherApi weatherApi) : IWeatherService
         "Кишинев", "N", "Киев"
     };
 
-    public async Task<WeatherInfo> GetWeatherServiceAsync(string cityName)
+    public async Task<WeatherInfo> GetWeatherInfoAsync(string cityName)
     {
         if (_bannedCities.Contains(cityName))
             throw new InvalidOperationException($"Запрос погоды для города '{cityName}' запрещен.");
