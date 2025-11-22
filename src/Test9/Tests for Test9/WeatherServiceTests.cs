@@ -33,6 +33,7 @@ public sealed class WeatherServiceTests
         var weatherService = _provider.GetRequiredService<IWeatherService>();
         await Assert.ThrowsAsync<ArgumentException>(async () => await weatherService.GetWeatherInfoAsync(input));
     }
+    
     [Fact]
     public async Task WeatherOutput()
     {

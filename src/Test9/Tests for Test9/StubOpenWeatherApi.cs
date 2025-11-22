@@ -4,14 +4,11 @@ namespace Tests;
 
 internal sealed class StubOpenWeatherApi : IOpenWeatherApi
 {
-    private static readonly TempInfoDto DefaultTemp = new(15);
-    private static readonly WindInfoDto DefaultWind = new(30);
-    private static readonly WeatherInfoDto[] DefaultWeather = [new("Солнечно")];
     private readonly WeatherTransfer _stubData = new(
-        DefaultTemp,
-        DefaultWind,
+        new TempInfoDto(15),
+        new WindInfoDto(30),
         "TestCity",
-        DefaultWeather);
+        [new("Солнечно")]);
 
     public Task<WeatherTransfer> GetOpenWeatherApiAsync
     (

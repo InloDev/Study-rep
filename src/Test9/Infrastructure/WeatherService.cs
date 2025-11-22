@@ -20,7 +20,7 @@ public sealed class WeatherService(IOpenWeatherApi weatherApi) : IWeatherService
 
         var weatherInfo = new WeatherInfo(
             weatherResponse.Name,
-            weatherResponse.Weather[0].Description,
+            weatherResponse.Weather.Single().Description,
             weatherResponse.Main.Temp,
             weatherResponse.Wind.Speed);
         return weatherInfo;
