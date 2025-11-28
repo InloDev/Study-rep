@@ -1,10 +1,13 @@
 ﻿using Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
+using Refit;
 
 IServiceCollection services = new ServiceCollection();
 
-services.AddHttpClient();
-services.AddTransient<IWeatherApi, WeatherApi>();
+services.AddRefitClient<IOpenWeatherApi>().ConfigureHttpClient(client =>
+{
+    client.BaseAddress = new Uri("https://api.openweathermap.org/data/2.5/");
+});
 services.AddTransient<IWeatherService, WeatherService>();
 
 var serviceProvider = services.BuildServiceProvider();
@@ -17,7 +20,11 @@ try
 
     if (string.IsNullOrWhiteSpace(cityName))
         Console.WriteLine("Недопустимое название города!");
-    else Console.WriteLine(await cityRestrictionService.GetWeatherAsync(cityName));
+    else
+    {
+        var weatherInfo =(await cityRestrictionService.GetWeatherInfoAsync(cityName)).GetDisplayInfo();
+        Console.WriteLine(weatherInfo);
+    }
 }
 catch (InvalidOperationException e)
 {
